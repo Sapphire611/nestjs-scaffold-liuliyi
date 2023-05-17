@@ -1,12 +1,12 @@
 # Nestjs-scaffold-liuliyi
 
-> Author : [liuliyi (of cource)](http://172.16.40.16:7777/liuliyi)
+> Author : [liuliyi](http://172.16.40.16:7777/liuliyi)
 
 
-## Hint 
+## Tips:
 
-> 1. For quickly creating a CRUD controller with the validation built-in, you may use the CLI's CRUD generator: 
+1. 在 Terminal 处 键入以下命令，会快速创建[name]的CRUD模版
 
-a```
+```shell
 nest g resource [name].
 ```
