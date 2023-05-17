@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { TasksModule } from './tasks/tasks.module';
-
+import config from '../config/local.config';
+import { AppController } from './app.controller';
+import { UserModule } from './modules/user/user.module';
 @Module({
-  imports: [TasksModule, MongooseModule.forRoot('mongodb://172.16.30.120:27017/nest-test')],
-  controllers: [],
+  imports: [UserModule, MongooseModule.forRoot(config.mongodbUrl)],
+  controllers: [AppController],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }

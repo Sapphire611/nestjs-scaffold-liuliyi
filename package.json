@@ -1,13 +1,14 @@
 {
-  "name": "nestjs-sapphire611",
+  "name": "nestjs-scaffold-liuliyi",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Author: Sapphire611 <http://172.16.40.16:7777/liuliyi>",
+  "author": "Sapphire611 <liuliyi@shgbit.com>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "dev": "nest start --watch",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -22,8 +23,11 @@
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/mongoose": "^9.2.1",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.3.0",
+    "class-validator": "^0.14.0",
     "mongoose": "^6.8.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
