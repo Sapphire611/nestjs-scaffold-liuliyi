@@ -8,5 +8,5 @@
 1. 在 Terminal 处 键入以下命令，会快速创建[name]的CRUD模版
 
 ```shell
-nest g resource [name].
+npx nest generate resource [name].
 ```

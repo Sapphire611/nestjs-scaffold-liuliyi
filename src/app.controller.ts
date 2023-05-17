@@ -4,12 +4,17 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 @ApiTags('Basic')
 @Controller('/api')
 export class AppController {
+  private helloMessage: string;
+
+  constructor() {
+    this.helloMessage = 'Hello!'
+  }
+
   @ApiOperation({
-    summary: 'Test 4 Connection',
-    description: '测试连通情况用，会返回 nestjs-scaffold-liuliyi is running~'
+    summary: '测试连通性',
   })
   @Get()
   getHello(): string {
-    return 'nestjs-scaffold-liuliyi is running~';
+    return this.helloMessage;
   }
 }
