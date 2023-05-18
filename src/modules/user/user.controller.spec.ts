@@ -3,7 +3,7 @@ import { MongooseModule, getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
 import * as request from 'supertest';
-import { AppModule } from '../../app.module';
+import { AppModule } from '@/app.module';
 import config from '../../config/local.config';
 
 import { ResponseUserDto } from './dto/create-user.dto';

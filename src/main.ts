@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import {Logger, ValidationPipe} from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { description, name, version } from '../package.json';
@@ -7,6 +7,8 @@ import config from './config/local.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe());
+
 
   const swaggerOptions = new DocumentBuilder()
     .setTitle(name)
@@ -26,4 +28,4 @@ async function bootstrap() {
   Logger.debug(`swagger is running on: http://127.0.0.1:${config.port}/${config.swaggerSuffix}`);
 
 }
-bootstrap();
+bootstrap().then(r => r);
