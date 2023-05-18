@@ -1,9 +1,7 @@
+import { CustomRequest } from "@/common/interfaces/express.interface";
 import { Injectable, NestMiddleware } from '@nestjs/common';
+import { NextFunction, Response } from 'express';
 import { v4 as uuidV4 } from 'uuid';
-import {Response, NextFunction } from 'express';
-import {CustomRequest} from "@/common/interfaces/express.interface";
-
-
 
 @Injectable()
 export class UniqueIdMiddleware implements NestMiddleware {
