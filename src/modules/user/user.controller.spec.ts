@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import * as request from 'supertest';
 import { AppModule } from '../../app.module';
 import config from '../../config/local.config';
+
 import { ResponseUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 
@@ -21,8 +22,7 @@ describe('UserController', () => {
     await app.init();
 
     // 测试数据库中清除所有User数据
-    const userModel = module.get<Model<any>>(getModelToken(User.name));
-    await userModel.deleteMany({});
+    await module.get<Model<any>>(getModelToken(User.name)).deleteMany({});
   });
 
 

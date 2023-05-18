@@ -2,7 +2,7 @@ import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Basic')
-@Controller('/api')
+@Controller('/')
 export class AppController {
   public helloMessage: string;
 
