@@ -7,7 +7,7 @@ export class AppController {
   public helloMessage: string;
 
   constructor() {
-    this.helloMessage = 'Hello!'
+    this.helloMessage = 'Hello!';
   }
 
   @ApiOperation({

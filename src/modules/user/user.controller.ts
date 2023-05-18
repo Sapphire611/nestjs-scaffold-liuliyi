@@ -8,7 +8,7 @@ import { UserService } from './user.service';
 @Controller('/api/v1/users')
 @ApiExtraModels(CreateUserDto, UpdateUserDto)
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @ApiOperation({
     summary: '创建用户',

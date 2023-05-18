@@ -1,4 +1,17 @@
 {
-  "singleQuote": true,
-  "trailingComma": "all"
+	"packageManager": "yarn",
+	"printWidth": 150,
+	"trailingComma": "es5",
+	"tabWidth": 2,
+	"semi": true,
+	"singleQuote": true,
+	"bracketSameLine": true,
+	"arrowParens": "avoid",
+	"proseWrap": "never",
+	"rules": {
+		"indent": [
+			"off",
+			2
+		]
+	}
 }

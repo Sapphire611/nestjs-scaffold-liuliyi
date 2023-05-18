@@ -16,26 +16,21 @@ const bootstrap = async () => {
   await app.listen(config.port || 3000);
   Logger.debug(`${name}-${version} is running on: http://127.0.0.1:${config.port}`);
   Logger.debug(`swagger is running on: http://127.0.0.1:${config.port}/${config.swaggerSuffix}`);
-}
+};
 
-bootstrap().then(() => {
-  Logger.debug('bootstrap success');
-}).catch((err) => {
-  Logger.error(err);
-});
+bootstrap()
+  .then(() => {
+    Logger.debug('bootstrap success');
+  })
+  .catch(err => {
+    Logger.error(err);
+  });
 
 const enableSwagger = async (app: INestApplication) => {
-  const swaggerOptions = new DocumentBuilder()
-    .setTitle(name)
-    .setVersion(version)
-    .setDescription(description)
-    .addBearerAuth()
-    .build();
+  const swaggerOptions = new DocumentBuilder().setTitle(name).setVersion(version).setDescription(description).addBearerAuth().build();
 
   const document = SwaggerModule.createDocument(app, swaggerOptions, {
     ignoreGlobalPrefix: false,
   });
   SwaggerModule.setup(config.swaggerSuffix, app, document);
-}
-
-
+};

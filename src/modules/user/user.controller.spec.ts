@@ -3,7 +3,7 @@ import { MongooseModule, getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
 import * as request from 'supertest';
-import { AppModule } from '@/app.module';
+import { AppModule } from '../../app.module';
 import config from '../../config/local.config';
 
 import { ResponseUserDto } from './dto/create-user.dto';
@@ -25,7 +25,6 @@ describe('UserController', () => {
     await module.get<Model<any>>(getModelToken(User.name)).deleteMany({});
   });
 
-
   it('[POST] /api/v1/users', () => {
     const requestBody = {
       name: 'test',
@@ -37,7 +36,7 @@ describe('UserController', () => {
     return request(app.getHttpServer())
       .post('/api/v1/users')
       .send(requestBody)
-      .expect((res) => {
+      .expect(res => {
         expect(200);
         expect(res.body).toHaveProperty('_id');
         expect(res.body).toHaveProperty('name', requestBody.name);
@@ -51,48 +50,46 @@ describe('UserController', () => {
   it('[GET] /api/v1/users', () => {
     return request(app.getHttpServer())
       .get('/api/v1/users')
-      .expect((res) => {
-        expect(200)
+      .expect(res => {
+        expect(200);
         expect(res.body.filter((item: User) => item.name === user.name).length).toBe(1);
       });
   });
 
-
   it('[GET] /api/v1/users/:id', () => {
     return request(app.getHttpServer())
       .get(`/api/v1/users/${user._id}`)
-      .expect((res) => {
-        expect(200)
-        expect(res.body._id).toEqual(user._id)
+      .expect(res => {
+        expect(200);
+        expect(res.body._id).toEqual(user._id);
       });
   });
 
   it('[PATCH] /api/v1/users/:id', () => {
     const requestBody = {
       name: 'test2',
-    }
+    };
     return request(app.getHttpServer())
       .patch(`/api/v1/users/${user._id}`)
       .send(requestBody)
-      .expect((res) => {
-        expect(200)
-        expect(res.body.acknowledged).toEqual(true)
-        expect(res.body.modifiedCount).toEqual(1)
+      .expect(res => {
+        expect(200);
+        expect(res.body.acknowledged).toEqual(true);
+        expect(res.body.modifiedCount).toEqual(1);
       });
   });
 
   it('[DELETE] /api/v1/users/:id', () => {
     return request(app.getHttpServer())
       .delete(`/api/v1/users/${user._id}`)
-      .expect((res) => {
-        expect(200)
-        expect(res.body.acknowledged).toEqual(true)
-        expect(res.body.deletedCount).toEqual(1)
+      .expect(res => {
+        expect(200);
+        expect(res.body.acknowledged).toEqual(true);
+        expect(res.body.deletedCount).toEqual(1);
       });
   });
 
   afterAll(async () => {
     await app.close();
   });
-
 });

@@ -11,4 +11,4 @@ const mongodbUrl = process.env.NODE_ENV === 'test' ? config.mongodbTestUrl : con
   controllers: [AppController],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}
