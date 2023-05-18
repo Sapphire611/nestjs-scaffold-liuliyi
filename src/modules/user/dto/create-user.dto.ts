@@ -15,3 +15,7 @@ export class CreateUserDto {
     // @ApiProperty()
     // active?: boolean;
 }
+
+export class ResponseUserDto extends CreateUserDto {
+    _id: String;
+}

@@ -1,13 +1,12 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import {ApiExtraModels, ApiOperation, ApiTags, getSchemaPath} from '@nestjs/swagger';
+import { ApiExtraModels, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
-import {FuckUserDto} from "./dto/fuck-user.dto";
 
 @ApiTags('Users 用户相关')
 @Controller('/api/v1/users')
-@ApiExtraModels(CreateUserDto, UpdateUserDto, FuckUserDto)
+@ApiExtraModels(CreateUserDto, UpdateUserDto)
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
