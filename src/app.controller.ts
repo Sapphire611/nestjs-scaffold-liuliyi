@@ -4,7 +4,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 @ApiTags('Basic')
 @Controller('/api')
 export class AppController {
-  private helloMessage: string;
+  public helloMessage: string;
 
   constructor() {
     this.helloMessage = 'Hello!'
