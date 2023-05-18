@@ -28,4 +28,8 @@ async function bootstrap() {
   Logger.debug(`swagger is running on: http://127.0.0.1:${config.port}/${config.swaggerSuffix}`);
 
 }
-bootstrap().then(r => r);
+bootstrap().then(()=>{
+    Logger.debug('bootstrap success');
+}).catch((err) => {
+    Logger.error(err);
+});
