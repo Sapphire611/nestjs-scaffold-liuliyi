@@ -1,11 +1,13 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {ApiExtraModels, ApiOperation, ApiTags, getSchemaPath} from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
+import {FuckUserDto} from "./dto/fuck-user.dto";
 
 @ApiTags('Users 用户相关')
 @Controller('/api/v1/users')
+@ApiExtraModels(CreateUserDto, UpdateUserDto, FuckUserDto)
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
@@ -31,7 +33,7 @@ export class UserController {
   })
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+    return this.userService.findOne(id);
   }
 
   @ApiOperation({
@@ -39,7 +41,7 @@ export class UserController {
   })
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+    return this.userService.update(id, updateUserDto);
   }
 
   @ApiOperation({
@@ -47,6 +49,6 @@ export class UserController {
   })
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+    return this.userService.remove(id);
   }
 }
