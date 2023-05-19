@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiExtraModels, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Schema } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
@@ -31,7 +32,7 @@ export class UserController {
     summary: '查询用户详情',
   })
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: Schema.Types.ObjectId) {
     return this.userService.findOne(id);
   }
 
@@ -39,7 +40,7 @@ export class UserController {
     summary: '修改用户',
   })
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(@Param('id') id: Schema.Types.ObjectId, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
   }
 
@@ -47,7 +48,7 @@ export class UserController {
     summary: '删除用户',
   })
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: Schema.Types.ObjectId) {
     return this.userService.remove(id);
   }
 }
