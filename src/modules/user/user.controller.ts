@@ -2,8 +2,7 @@ import { PaginateResult } from '@/common/interfaces';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { ApiExtraModels, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Schema } from 'mongoose';
-import { CreateUserDto, UpdateUserDto, listUserDto } from './dto';
-import { User } from './entities/user.entity';
+import { CreateUserDto, ListUserDto, ResponseUserDto, UpdateUserDto } from './dto';
 import { UserService } from './user.service';
 
 @ApiTags('Users 用户相关 [@nestjs/mongoose]')
@@ -16,7 +15,7 @@ export class UserController {
     summary: '获得用户列表',
   })
   @Get()
-  findAll(@Query() listUserDto: listUserDto): Promise<PaginateResult<User>> {
+  findAll(@Query() listUserDto: ListUserDto): Promise<PaginateResult<ResponseUserDto>> {
     return this.userService.findAll(listUserDto);
   }
 
@@ -37,7 +36,7 @@ export class UserController {
     summary: '创建用户',
   })
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body() createUserDto: CreateUserDto): Promise<Object> {
     return this.userService.create(createUserDto);
   }
 

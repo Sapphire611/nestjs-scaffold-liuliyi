@@ -1,14 +1,13 @@
 import { INestApplication } from '@nestjs/common';
 import { MongooseModule, getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import * as crypto from 'crypto-js';
 import { Model } from 'mongoose';
 import * as request from 'supertest';
 import { AppModule } from '../../app.module';
 import config from '../../config/local.config';
-
 import { ResponseUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
-
 describe('UserController', () => {
   let app: INestApplication;
   let user: ResponseUserDto;
@@ -22,13 +21,14 @@ describe('UserController', () => {
     await app.init();
 
     // 测试数据库中清除所有User数据
-    await module.get<Model<any>>(getModelToken(User.name)).deleteMany({});
+    module.get<Model<any>>(getModelToken(User.name)).deleteMany({});
   });
 
   it('[POST] /api/v1/users', () => {
     const requestBody = {
       name: 'test',
       age: 18,
+      password: crypto.MD5('123456').toString(),
       description: 'test',
       active: true,
     };

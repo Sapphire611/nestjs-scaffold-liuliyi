@@ -3,19 +3,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model, Schema } from 'mongoose';
 import { paginate } from 'nestjs-paginate-mongo';
-import { listUserDto } from './dto';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto, ListUserDto, ResponseUserDto, UpdateUserDto } from './dto';
 import { User, UserDocument } from './entities/user.entity';
+
 @Injectable()
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<Object> {
     return await this.userModel.create(createUserDto);
   }
 
-  async findAll(query: listUserDto): Promise<PaginateResult<User>> { 
+  async findAll(query: ListUserDto): Promise<PaginateResult<ResponseUserDto>> {
     // common filter Version
     const filter: FilterQuery<UserDocument> = {};
     if (query.keys) {
@@ -44,7 +43,7 @@ export class UserService {
     // return aggregatePaginate(this.userModel, oprs, { perPage: +query.size, page: +query.page });
   }
 
-  async findOne(_id: Schema.Types.ObjectId): Promise<User | null> {
+  async findOne(_id: Schema.Types.ObjectId): Promise<ResponseUserDto | null> {
     return this.userModel.findOne({ _id });
   }
 
@@ -54,5 +53,9 @@ export class UserService {
 
   async remove(_id: Schema.Types.ObjectId) {
     return this.userModel.deleteOne({ _id });
+  }
+
+  async findByNameAndPassword(name: string, password: string): Promise<ResponseUserDto | null> {
+    return this.userModel.findOne({ name, password });
   }
 }

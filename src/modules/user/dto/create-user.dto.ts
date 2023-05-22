@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, Length } from 'class-validator';
+import { Schema } from 'mongoose';
 
 export class CreateUserDto {
   @ApiProperty({ description: '用户名', example: 'testName1' })
@@ -10,6 +11,9 @@ export class CreateUserDto {
   @ApiProperty({ description: '年龄', example: 18 })
   age: number;
 
+  @ApiProperty({ description: '密码(md5加密)', example: 'e10adc3949ba59abbe56e057f20f883e' })
+  password: string;
+
   @ApiProperty({ description: '说明', example: 'nothing~' })
   description?: string;
 
@@ -18,5 +22,5 @@ export class CreateUserDto {
 }
 
 export class ResponseUserDto extends CreateUserDto {
-  _id: string;
+  _id: Schema.Types.ObjectId;
 }
