@@ -27,7 +27,7 @@ export class UserService {
     }
 
     // paginate from nestjs-paginate-mongo
-    return paginate(this.userModel.find(filter), { page: +query.page, perPage: +query.size });
+    return paginate(this.userModel.find(filter), { page: query.page, perPage: query.size });
 
     // Aggregate Version
     // const oprs = [];

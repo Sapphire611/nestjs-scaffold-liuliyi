@@ -8,7 +8,7 @@ export class CreateUserDto {
   name: string;
 
   @ApiProperty({ description: '年龄', example: 18 })
-  age: boolean;
+  age: number;
 
   @ApiProperty({ description: '说明', example: 'nothing~' })
   description?: string;
