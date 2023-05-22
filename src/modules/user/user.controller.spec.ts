@@ -52,7 +52,7 @@ describe('UserController', () => {
       .get('/api/v1/users')
       .expect(res => {
         expect(200);
-        expect(res.body.filter((item: User) => item.name === user.name).length).toBe(1);
+        expect(res.body.data.filter((item: User) => item.name === user.name).length).toBe(1);
       });
   });
 
