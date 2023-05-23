@@ -1,11 +1,12 @@
 import { PaginateResult } from '@/common/interfaces';
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
-import { ApiExtraModels, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiExtraModels, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Schema } from 'mongoose';
+import { AuthGuard } from '../auth/auth.guard';
 import { CreateUserDto, ListUserDto, ResponseUserDto, UpdateUserDto } from './dto';
 import { UserService } from './user.service';
 
-@ApiTags('Users 用户相关 [@nestjs/mongoose]')
+@ApiTags('Users 用户相关')
 @Controller('/api/v1/users')
 @ApiExtraModels(CreateUserDto, UpdateUserDto)
 export class UserController {
@@ -14,6 +15,8 @@ export class UserController {
   @ApiOperation({
     summary: '获得用户列表',
   })
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Get()
   findAll(@Query() listUserDto: ListUserDto): Promise<PaginateResult<ResponseUserDto>> {
     return this.userService.findAll(listUserDto);
@@ -27,6 +30,8 @@ export class UserController {
     description: '用户id',
     type: 'string',
   })
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Get(':id')
   findOne(@Param('id') id: Schema.Types.ObjectId) {
     return this.userService.findOne(id);
@@ -35,8 +40,10 @@ export class UserController {
   @ApiOperation({
     summary: '创建用户',
   })
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Post()
-  create(@Body() createUserDto: CreateUserDto): Promise<Object> {
+  create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 
@@ -49,6 +56,8 @@ export class UserController {
     description: '用户id',
     type: 'string',
   })
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Patch('/:id')
   update(@Param('id') id: Schema.Types.ObjectId, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
@@ -62,6 +71,8 @@ export class UserController {
     description: '用户id',
     type: 'string',
   })
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Delete(':id')
   remove(@Param('id') id: Schema.Types.ObjectId) {
     return this.userService.remove(id);

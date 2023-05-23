@@ -1,5 +1,5 @@
 import { PaginateResult } from '@/common/interfaces';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model, Schema } from 'mongoose';
 import { paginate } from 'nestjs-paginate-mongo';
@@ -7,11 +7,20 @@ import { CreateUserDto, ListUserDto, ResponseUserDto, UpdateUserDto } from './dt
 import { User, UserDocument } from './entities/user.entity';
 
 @Injectable()
-export class UserService {
+export class UserService implements OnModuleInit {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async create(createUserDto: CreateUserDto): Promise<Object> {
+  async onModuleInit() {
+    this.initAdmin();
+  }
+
+  async create(createUserDto: CreateUserDto) {
+    if (!createUserDto.displayName) {
+      createUserDto.displayName = createUserDto.name;
+    }
     return await this.userModel.create(createUserDto);
+    // const newUser = new this.userModel(createUserDto);
+    // return await newUser.save();
   }
 
   async findAll(query: ListUserDto): Promise<PaginateResult<ResponseUserDto>> {
@@ -57,5 +66,23 @@ export class UserService {
 
   async findByNameAndPassword(name: string, password: string): Promise<ResponseUserDto | null> {
     return this.userModel.findOne({ name, password });
+  }
+
+  async initAdmin() {
+    const admin = await this.userModel.findOne({ source: 'admin' });
+
+    if (!admin) {
+      await this.userModel.create({
+        name: 'admin',
+        displayName: 'admin',
+        source: 'admin',
+        password: 'e10adc3949ba59abbe56e057f20f883e',
+        age: '18',
+        description: 'init admin user',
+        active: true,
+      });
+
+      Logger.debug('Init Admin ...');
+    }
   }
 }

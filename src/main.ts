@@ -19,7 +19,6 @@ class Bootstrap {
   }
 
   async bootstrap(app: INestApplication) {
-    app = await NestFactory.create(AppModule);
     app.useGlobalPipes(new ValidationPipe()); // 全局验证管道
     app.enableCors(); // 允许跨域
 
