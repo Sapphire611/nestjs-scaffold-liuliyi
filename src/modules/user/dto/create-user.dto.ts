@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNumber, IsString, Length } from 'class-validator';
-import { Schema } from 'mongoose';
+import { Types } from 'mongoose';
 
 export class CreateUserDto {
   @ApiProperty({ description: '用户名', example: 'test1' })
@@ -31,5 +31,5 @@ export class CreateUserDto {
 }
 
 export class ResponseUserDto extends CreateUserDto {
-  _id: Schema.Types.ObjectId;
+  _id: Types.ObjectId;
 }

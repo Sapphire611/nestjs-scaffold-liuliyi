@@ -1,16 +1,14 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectModel } from '@nestjs/mongoose';
 import * as crypto from 'crypto-js';
-import { Model } from 'mongoose';
+import { Types } from 'mongoose';
 import { CreateUserDto, ResponseUserDto } from '../user/dto';
-import { User, UserDocument } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 import { createRandomUserDTO } from './dto';
 
 @Injectable()
 export class AuthService {
-  constructor( private userService: UserService, private jwtService: JwtService) {}
+  constructor(private userService: UserService, private jwtService: JwtService) {}
 
   async getToken(username: string, password: string): Promise<any> {
     const user: ResponseUserDto | null = await this.userService.findByNameAndPassword(username, password);
@@ -50,12 +48,16 @@ export class AuthService {
     createUserDto.active = true;
 
     const user = await this.userService.create(createUserDto);
-    const payload = { id: user._id, username: user.name };
+    const userId: Types.ObjectId = user._id;
+
+    const payload = { id: userId, username: user.name };
     const token = await this.jwtService.signAsync(payload);
 
     const dto = new createRandomUserDTO();
+    dto._id = userId;
     dto.name = user.name;
     dto.displayName = user.displayName ?? '';
+    dto.password = createUserDto.password;
     dto.age = user.age;
     dto.description = user.description;
     dto.active = user.active;
