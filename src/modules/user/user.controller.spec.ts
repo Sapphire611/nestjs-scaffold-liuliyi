@@ -1,30 +1,37 @@
 import { INestApplication } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as crypto from 'crypto-js';
 import * as request from 'supertest';
 import { AppModule } from '../../app.module';
 
+import { AuthService } from '../auth/auth.service';
+import { createRandomUserDTO } from '../auth/dto';
 import { ResponseUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 
 describe('UserController', () => {
+  let module: TestingModule;
   let app: INestApplication;
-  let user: ResponseUserDto; // 用于存储测试用例中创建的用户
-  let jwtService: JwtService;
+  let authService: AuthService;
+  
+  let user: createRandomUserDTO; // 随机生成的用户，携带token，会用token登陆
+  let userResult: ResponseUserDto; // 用于存储测试用例中创建的用户
+  
   beforeAll(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
-
-    const userModel = module.get(getModelToken(User.name));
 
     app = module.createNestApplication();
     await app.init();
 
     // 测试数据库中清除所有User数据
-    userModel.deleteMany({});
+    const userModel = module.get(getModelToken(User.name));
+    await userModel.deleteMany({});
+
+    authService = module.get<AuthService>(AuthService);
+    user = await authService.createRandomUser();
   });
 
   it('[POST] /api/v1/users', () => {
@@ -39,10 +46,7 @@ describe('UserController', () => {
     return request(app.getHttpServer())
       .post('/api/v1/users')
       .send(requestBody)
-      .set(
-        'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmIzZDRjYmU4ZjM0NjFhYmQ2ZTdiZCIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2ODQ4MTIyOTksImV4cCI6MTY4NDg5ODY5OX0.YRrQEmUtBIn-nk2tqAhkx08pLGTcZFHJjUY-UXgkkf4'
-      ) // Set the Bearer token in the request header
+      .set('Authorization', `Bearer ${user.token}`)
       .expect(res => {
         expect(200);
         expect(res.body).toHaveProperty('_id');
@@ -50,33 +54,27 @@ describe('UserController', () => {
         expect(res.body).toHaveProperty('age', requestBody.age);
         expect(res.body).toHaveProperty('description', requestBody.description);
         expect(res.body).toHaveProperty('active', requestBody.active);
-        user = res.body;
+        userResult = res.body;
       });
   });
 
   it('[GET] /api/v1/users', () => {
     return request(app.getHttpServer())
       .get('/api/v1/users')
-      .set(
-        'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmIzZDRjYmU4ZjM0NjFhYmQ2ZTdiZCIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2ODQ4MTIyOTksImV4cCI6MTY4NDg5ODY5OX0.YRrQEmUtBIn-nk2tqAhkx08pLGTcZFHJjUY-UXgkkf4'
-      ) // Set the Bearer token in the request header
+      .set('Authorization', `Bearer ${user.token}`)
       .expect(res => {
         expect(200);
-        expect(res.body.data.filter((item: User) => item.name === user.name).length).toBe(1);
+        expect(res.body.data.filter((item: User) => item.name === userResult.name).length).toBe(1);
       });
   });
 
   it('[GET] /api/v1/users/:id', () => {
     return request(app.getHttpServer())
-      .get(`/api/v1/users/${user._id}`)
-      .set(
-        'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmIzZDRjYmU4ZjM0NjFhYmQ2ZTdiZCIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2ODQ4MTIyOTksImV4cCI6MTY4NDg5ODY5OX0.YRrQEmUtBIn-nk2tqAhkx08pLGTcZFHJjUY-UXgkkf4'
-      ) // Set the Bearer token in the request header
+      .get(`/api/v1/users/${userResult._id}`)
+      .set('Authorization', `Bearer ${user.token}`)
       .expect(res => {
         expect(200);
-        expect(res.body._id).toEqual(user._id);
+        expect(res.body._id).toEqual(userResult._id);
       });
   });
 
@@ -85,12 +83,9 @@ describe('UserController', () => {
       name: 'test2',
     };
     return request(app.getHttpServer())
-      .patch(`/api/v1/users/${user._id}`)
+      .patch(`/api/v1/users/${userResult._id}`)
       .send(requestBody)
-      .set(
-        'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmIzZDRjYmU4ZjM0NjFhYmQ2ZTdiZCIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2ODQ4MTIyOTksImV4cCI6MTY4NDg5ODY5OX0.YRrQEmUtBIn-nk2tqAhkx08pLGTcZFHJjUY-UXgkkf4'
-      ) // Set the Bearer token in the request header
+      .set('Authorization', `Bearer ${user.token}`)
       .expect(res => {
         expect(200);
         expect(res.body.acknowledged).toEqual(true);
@@ -100,11 +95,8 @@ describe('UserController', () => {
 
   it('[DELETE] /api/v1/users/:id', () => {
     return request(app.getHttpServer())
-      .delete(`/api/v1/users/${user._id}`)
-      .set(
-        'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmIzZDRjYmU4ZjM0NjFhYmQ2ZTdiZCIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2ODQ4MTIyOTksImV4cCI6MTY4NDg5ODY5OX0.YRrQEmUtBIn-nk2tqAhkx08pLGTcZFHJjUY-UXgkkf4'
-      ) // Set the Bearer token in the request header
+      .delete(`/api/v1/users/${userResult._id}`)
+      .set('Authorization', `Bearer ${user.token}`)
       .expect(res => {
         expect(200);
         expect(res.body.acknowledged).toEqual(true);
