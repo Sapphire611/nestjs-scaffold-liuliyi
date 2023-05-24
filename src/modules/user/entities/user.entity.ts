@@ -9,7 +9,7 @@ export class User {
   name: string;
 
   @Prop({ comment: '昵称(显示用)', index: true })
-  displayName?: string;
+  displayName: string;
 
   @Prop({ required: true, comment: '来源', index: true, default: 'user', enum: ['user', 'admin'] })
   source: string;

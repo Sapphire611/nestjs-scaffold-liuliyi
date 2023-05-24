@@ -38,14 +38,14 @@ export class AuthService {
    * @returns
    */
   async createRandomUser(): Promise<createRandomUserDTO> {
-    const createUserDto = new CreateUserDto();
-
-    createUserDto.name = 'test' + this.randomNumberSuffix(4);
-    createUserDto.displayName = createUserDto.name;
-    createUserDto.age = 18;
-    createUserDto.password = crypto.MD5('123456').toString();
-    createUserDto.description = createUserDto.name;
-    createUserDto.active = true;
+    const createUserDto: CreateUserDto = {
+      name: 'test' + this.randomNumberSuffix(4),
+      displayName: 'test',
+      age: 18,
+      password: crypto.MD5('123456').toString(),
+      description: 'test',
+      active: true,
+    };
 
     const user = await this.userService.create(createUserDto);
     const userId: Types.ObjectId = user._id;
@@ -53,16 +53,17 @@ export class AuthService {
     const payload = { id: userId, username: user.name };
     const token = await this.jwtService.signAsync(payload);
 
-    const dto = new createRandomUserDTO();
-    dto._id = userId;
-    dto.name = user.name;
-    dto.displayName = user.displayName ?? '';
-    dto.password = createUserDto.password;
-    dto.age = user.age;
-    dto.description = user.description;
-    dto.active = user.active;
-    dto.token = token;
+    const userResult: createRandomUserDTO = {
+      _id: userId,
+      name: user.name,
+      displayName: createUserDto.name,
+      password: createUserDto.password,
+      age: user.age,
+      description: user.description,
+      active: user.active,
+      token: token,
+    };
 
-    return dto;
+    return userResult;
   }
 }

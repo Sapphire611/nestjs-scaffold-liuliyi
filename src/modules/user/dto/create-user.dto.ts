@@ -11,7 +11,7 @@ export class CreateUserDto {
   @ApiProperty({ description: '用户名', example: 'testName1' })
   @IsString()
   @Length(3, 10)
-  displayName: string;
+  displayName?: string;
 
   @ApiProperty({ description: '年龄', example: 18 })
   @IsNumber()
