@@ -1,13 +1,11 @@
+import { AppModule } from '@/app.module';
+import { AuthService } from '@/common/auth/auth.service';
+import { createRandomUserDTO } from '@/common/auth/dto';
 import { INestApplication } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import * as crypto from 'crypto-js';
+import crypto from 'crypto-js';
 import request from 'supertest';
-import { AppModule } from '../../app.module';
-
-// import { AuthService } from '../auth/auth.service';
-import { AuthService } from '@/modules/auth/auth.service';
-import { createRandomUserDTO } from '../auth/dto';
 import { ResponseUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 
@@ -15,10 +13,10 @@ describe('UserController', () => {
   let module: TestingModule;
   let app: INestApplication;
   let authService: AuthService;
-  
+
   let user: createRandomUserDTO; // 随机生成的用户，携带token，会用token登陆
   let userResult: ResponseUserDto; // 用于存储测试用例中创建的用户
-  
+
   beforeAll(async () => {
     module = await Test.createTestingModule({
       imports: [AppModule],

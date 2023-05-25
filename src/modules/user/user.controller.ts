@@ -1,8 +1,8 @@
+import { AuthGuard } from '@/common/auth/auth.guard';
 import { PaginateResult } from '@/common/interfaces';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiExtraModels, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Schema } from 'mongoose';
-import { AuthGuard } from '../auth/auth.guard';
 import { CreateUserDto, ListUserDto, ResponseUserDto, UpdateUserDto } from './dto';
 import { UserService } from './user.service';
 

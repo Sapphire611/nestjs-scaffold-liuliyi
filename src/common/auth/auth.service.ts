@@ -1,9 +1,9 @@
+import { UserService } from '@/modules/user/user.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import * as crypto from 'crypto-js';
+import crypto from 'crypto-js';
 import { Types } from 'mongoose';
-import { CreateUserDto, ResponseUserDto } from '../user/dto';
-import { UserService } from '../user/user.service';
+import { CreateUserDto, ResponseUserDto } from '../../modules/user/dto';
 import { createRandomUserDTO } from './dto';
 
 @Injectable()
