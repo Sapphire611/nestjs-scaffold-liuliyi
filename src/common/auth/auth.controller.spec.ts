@@ -1,10 +1,10 @@
 import { AppModule } from '@/app.module';
-import { User, UserDocument } from '@/modules/user/entities/user.entity';
+import { User, UserDocument } from '@/modules/user/schemas/user.schema';
 import { UserService } from '@/modules/user/user.service';
 import { INestApplication } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import request from 'supertest';
 import { AuthService } from './auth.service';
 import { createRandomUserDTO } from './dto';
@@ -66,6 +66,7 @@ describe('AuthController', () => {
   });
 
   afterAll(async () => {
+    await mongoose.connection.close();
     await app.close();
   });
 });

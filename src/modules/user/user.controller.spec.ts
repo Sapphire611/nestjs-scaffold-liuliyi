@@ -5,9 +5,10 @@ import { INestApplication } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import crypto from 'crypto-js';
+import mongoose from 'mongoose';
 import request from 'supertest';
 import { ResponseUserDto } from './dto/create-user.dto';
-import { User } from './entities/user.entity';
+import { User } from './schemas/user.schema';
 
 describe('UserController', () => {
   let module: TestingModule;
@@ -104,6 +105,7 @@ describe('UserController', () => {
   });
 
   afterAll(async () => {
+    await mongoose.connection.close();
     await app.close();
   });
 });

@@ -1,15 +1,16 @@
+import { MongoModule } from '@/providers/mongo/mongo.module';
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { UserSchema } from './entities/user.entity';
 import { UserController } from './user.controller';
+import { userProviders } from './user.providers';
 import { UserService } from './user.service';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]), // 导入用户模型
+    // MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]), // 导入用户模型
+    MongoModule,
   ],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, ...userProviders],
   exports: [UserService],
 })
 export class UserModule {}

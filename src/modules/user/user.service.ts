@@ -1,14 +1,14 @@
 import { PaginateResult } from '@/common/interfaces';
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model, Schema } from 'mongoose';
 import { paginate } from 'nestjs-paginate-mongo';
 import { CreateUserDto, ListUserDto, ResponseUserDto, UpdateUserDto } from './dto';
-import { User, UserDocument } from './entities/user.entity';
+import { User, UserDocument } from './schemas/user.schema';
 
 @Injectable()
 export class UserService implements OnModuleInit {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@Inject('UserModel') private readonly userModel: Model<UserDocument>) {}
 
   async onModuleInit() {
     this.initAdmin();
