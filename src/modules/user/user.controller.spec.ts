@@ -2,10 +2,11 @@ import { INestApplication } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as crypto from 'crypto-js';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from '../../app.module';
 
-import { AuthService } from '../auth/auth.service';
+// import { AuthService } from '../auth/auth.service';
+import { AuthService } from '@/modules/auth/auth.service';
 import { createRandomUserDTO } from '../auth/dto';
 import { ResponseUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';

@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from '../../app.module';
 import { User, UserDocument } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
