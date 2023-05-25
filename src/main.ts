@@ -27,6 +27,19 @@ class Bootstrap {
     await app.listen(this.port);
     Logger.debug(`${name}-${version} is running on: http://127.0.0.1:${this.port}`);
     Logger.debug(`swagger is running on: http://127.0.0.1:${this.port}/${config.swaggerSuffix}`);
+
+    this.checkMongo(app); // mongodb 连接成功后 , 输出 url
+    this.checkRedis(app); // redis 连接成功后 , 输出 url
+  }
+
+  checkRedis(app: INestApplication) {
+    const redisInstance = app.get('REDIS_CLIENT');
+    Logger.debug(`redis is running on: ${redisInstance.config.url}`);
+  }
+
+  checkMongo(app: INestApplication) {
+    const mongoInstance = app.get('MONGO_CONNECTION');
+    Logger.debug(`mongodb is running on: ${mongoInstance.connection._connectionString}`);
   }
 
   enableSwagger(app: INestApplication) {
