@@ -10,7 +10,7 @@
 ```shell
 npx nest generate resource [name].
 ```
----
+
 
 ## 2. 通用引入头 **"@/*"**
 
@@ -28,12 +28,11 @@ import { UserService } from './user.service';
 // 引用config文件夹下的配置文件 local.config.ts
 import config from '@/config/local.config';
 ```
---
+
 
 ## 3. Project Structure
 
 ```shell
-
 |-- src
 |   |-- common                      // 通用功能
 |   |-- config                      // 配置文件
