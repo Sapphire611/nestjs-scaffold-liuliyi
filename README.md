@@ -5,13 +5,14 @@
 
 ## Tips:
 
-1. 在 Terminal 处 键入以下命令，会快速创建[name]的CRUD模版
+## 1. 在 Terminal 处 键入以下命令，会快速创建[name]的CRUD模版
 
 ```shell
 npx nest generate resource [name].
 ```
+---
 
-2. 通用引入头 **"@/*"**,baseUrl从src开始计算
+## 2. 通用引入头 **"@/*"**
 
 > 在单个模块的功能开发中，**如果是模块内部的文件**，直接引入即可
 
@@ -26,4 +27,26 @@ import { UserService } from './user.service';
 ```ts
 // 引用config文件夹下的配置文件 local.config.ts
 import config from '@/config/local.config';
+```
+--
+
+## 3. Project Structure
+
+```shell
+
+|-- src
+|   |-- common                      // 通用功能
+|   |-- config                      // 配置文件
+|   |-- providers                   // [Injectable] 基础服务
+|   |-- modules/*                   // 功能模块
+|   |   |-- dto                     // 数据传输对象 (Data Transfer Object)
+|   |   |-- schemas                 // 数据库模型 (Model)
+|   |   |-- xxx.controller.ts       // 控制器
+|   |   |-- xxx.controller.spec.ts  // 控制器の测试文件 (e2e)
+|   |   |-- xxx.module.ts           // 模块
+|   |   |-- xxx.service.ts          // 服务
+|   |   |-- xxx.provicer.ts         // [Injectable] 注入对象配置
+|   |-- app.controller.ts           // 一个简单的controller 😄
+|   |-- app.module.ts               // 根模块
+|   |-- main.ts                     // 入口文件
 ```
