@@ -5,6 +5,7 @@ import { INestApplication } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import crypto from 'crypto-js';
+import Redis from 'ioredis';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { ResponseUserDto } from './dto/create-user.dto';
@@ -14,6 +15,7 @@ describe('UserController', () => {
   let module: TestingModule;
   let app: INestApplication;
   let authService: AuthService;
+  let redisClient: Redis;
 
   let user: createRandomUserDTO; // 随机生成的用户，携带token，会用token登陆
   let userResult: ResponseUserDto; // 用于存储测试用例中创建的用户
@@ -31,6 +33,7 @@ describe('UserController', () => {
     await userModel.deleteMany({});
 
     authService = module.get<AuthService>(AuthService);
+    redisClient = app.get('REDIS_CONNECTION');
     user = await authService.createRandomUser();
   });
 
@@ -106,6 +109,7 @@ describe('UserController', () => {
 
   afterAll(async () => {
     await mongoose.connection.close();
+    await redisClient.quit();
     await app.close();
   });
 });

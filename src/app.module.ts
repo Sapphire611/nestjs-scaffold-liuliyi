@@ -11,13 +11,6 @@ import { Module } from '@nestjs/common';
     UserModule,
     AuthModule,
     MongoModule,
-    // RedisModule.forRootAsync({
-    //   useFactory: () => ({
-    //     config: {
-    //       url: 'redis://localhost:6379',
-    //     },
-    //   }),
-    // }),
     RedisModule,
   ],
   controllers: [AppController],

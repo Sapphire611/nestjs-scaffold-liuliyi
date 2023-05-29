@@ -33,8 +33,8 @@ class Bootstrap {
   }
 
   checkRedis(app: INestApplication) {
-    const redisInstance = app.get('REDIS_CLIENT');
-    Logger.debug(`redis is running on: ${redisInstance.config.url}`);
+    const redisInstance = app.get('REDIS_CONNECTION');
+    Logger.debug(`redis is running on: http://${redisInstance.options.host}:${redisInstance.options.port}/${redisInstance.options.db}`);
   }
 
   checkMongo(app: INestApplication) {

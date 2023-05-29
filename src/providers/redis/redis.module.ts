@@ -1,10 +1,25 @@
-import { RedisModule as redisModule } from '@nestjs-modules/ioredis';
+import config from '@/config/local.config';
 import { Module } from '@nestjs/common';
-import { redisProviders } from './redis.providers';
+import Redis from 'ioredis';
+import { RedisController } from './redis.controller';
 
+const redisUrl = process.env.NODE_ENV === 'test' ? config.redisTestUrl : config.redisUrl;
+const db = redisUrl.split('/')?.[3];
+const [host, port] = redisUrl.split('/')?.[2].split(':');
 @Module({
-  imports: [redisModule],
-  providers: [...redisProviders],
-  exports: [...redisProviders],
+  providers: [
+    {
+      provide: 'REDIS_CONNECTION', // 自定义的 provider 标识符
+      useFactory: () => {
+        return new Redis({
+          host,
+          port: Number(port),
+          db: +db,
+        });
+      },
+    },
+  ],
+  controllers: [RedisController], // 将 RedisController 注册到 RedisModule 中
+  exports: ['REDIS_CONNECTION'], // 将 Redis provider 导出，以便其他模块可以使用
 })
 export class RedisModule {}
