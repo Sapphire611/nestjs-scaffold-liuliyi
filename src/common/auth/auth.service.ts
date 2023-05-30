@@ -1,5 +1,5 @@
 import { UserService } from '@/modules/user/user.service';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import crypto from 'crypto-js';
 import { Types } from 'mongoose';
@@ -8,19 +8,24 @@ import { createRandomUserDTO } from './dto';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(private userService: UserService, private jwtService: JwtService) {}
 
   async getToken(username: string, password: string): Promise<any> {
     const user: ResponseUserDto | null = await this.userService.findByNameAndPassword(username, password);
 
-    if (user?.password !== password) {
+    if (!user || user?.password !== password) {
       throw new UnauthorizedException();
     }
 
     const payload = { id: user._id, username: user.name };
 
+    const token = await this.jwtService.signAsync(payload);
+    this.logger.debug('Generate token = ' + token);
+
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: token,
     };
   }
 

@@ -1,13 +1,14 @@
 import { PaginateResult } from '@/common/interfaces';
 import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model, Schema } from 'mongoose';
 import { paginate } from 'nestjs-paginate-mongo';
 import { CreateUserDto, ListUserDto, ResponseUserDto, UpdateUserDto } from './dto';
-import { User, UserDocument } from './schemas/user.schema';
+import { UserDocument } from './schemas/user.schema';
 
 @Injectable()
 export class UserService implements OnModuleInit {
+  private readonly logger = new Logger(UserService.name);
+
   constructor(@Inject('UserModel') private readonly userModel: Model<UserDocument>) {}
 
   async onModuleInit() {
@@ -82,7 +83,7 @@ export class UserService implements OnModuleInit {
         active: true,
       });
 
-      Logger.debug('Init Admin ...');
+      this.logger.debug('Init Admin ...');
     }
   }
 }
