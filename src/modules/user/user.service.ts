@@ -28,11 +28,8 @@ export class UserService implements OnModuleInit {
     // common filter Version
     const filter: FilterQuery<UserDocument> = {};
     if (query.keys) {
-      filter.$and = [];
-      let pattern = new RegExp(query.keys, 'i');
-      filter.$and.push({
-        $or: [{ name: { $regex: pattern } }, { code: { $regex: pattern } }, { remark: { $regex: pattern } }],
-      });
+      const pattern = new RegExp(query.keys, 'i');
+      filter.$or = [{ name: { $regex: pattern } }, { displayName: { $regex: pattern } }];
     }
 
     // paginate from nestjs-paginate-mongo
