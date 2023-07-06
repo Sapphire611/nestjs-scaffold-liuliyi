@@ -77,4 +77,6 @@ export class UserController {
   remove(@Param('id') id: Schema.Types.ObjectId) {
     return this.userService.remove(id);
   }
+
+
 }
