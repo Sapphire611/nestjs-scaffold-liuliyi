@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import paginate from 'mongoose-paginate-v2';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -27,4 +28,8 @@ export class User {
   active: boolean;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const UserSchema = SchemaFactory.createForClass(User).plugin(paginate);
+
+// export interface UserPaginateDocument extends mongoose.Document, User {}
+// create the paginated model
+// export const userModel = mongoose.model<UserPaginateDocument, mongoose.PaginateModel<UserPaginateDocument>>('User', UserSchema, 'users');

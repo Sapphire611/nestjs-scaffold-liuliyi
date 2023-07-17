@@ -1,9 +1,8 @@
-import { PaginateResult } from '@/common/interfaces';
 import { AuthGuard } from '@/modules/auth/auth.guard';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiExtraModels, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Schema } from 'mongoose';
-import { CreateUserDto, ListUserDto, ResponseUserDto, UpdateUserDto } from './dto';
+import { CreateUserDto, ListUserDto, UpdateUserDto } from './dto';
 import { UserService } from './user.service';
 
 @ApiTags('Users 用户相关')
@@ -18,7 +17,7 @@ export class UserController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get()
-  findAll(@Query() listUserDto: ListUserDto): Promise<PaginateResult<ResponseUserDto>> {
+  findAll(@Query() listUserDto: ListUserDto) {
     return this.userService.findAll(listUserDto);
   }
 

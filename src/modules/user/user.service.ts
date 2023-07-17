@@ -1,7 +1,6 @@
-import { PaginateResult } from '@/common/interfaces';
+import { filterObject } from '@/common/utils';
 import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { FilterQuery, Model, Schema } from 'mongoose';
-import { paginate } from 'nestjs-paginate-mongo';
+import { FilterQuery, PaginateModel, Schema } from 'mongoose';
 import { CreateUserDto, ListUserDto, ResponseUserDto, UpdateUserDto } from './dto';
 import { UserDocument } from './schemas/user.schema';
 
@@ -9,7 +8,7 @@ import { UserDocument } from './schemas/user.schema';
 export class UserService implements OnModuleInit {
   private readonly logger = new Logger(UserService.name);
 
-  constructor(@Inject('UserModel') private readonly userModel: Model<UserDocument>) {}
+  constructor(@Inject('UserModel') private readonly userModel: PaginateModel<UserDocument>) {}
 
   async onModuleInit() {
     this.initAdmin();
@@ -24,32 +23,19 @@ export class UserService implements OnModuleInit {
     // return await newUser.save();
   }
 
-  async findAll(query: ListUserDto): Promise<PaginateResult<ResponseUserDto>> {
+  async findAll(query: ListUserDto) {
     // common filter Version
-    const filter: FilterQuery<UserDocument> = {};
-    if (query.keys) {
-      let pattern = new RegExp(query.keys, 'i');
-      filter.push({
-        $or: [{ name: { $regex: pattern } }, { code: { $regex: pattern } }, { remark: { $regex: pattern } }],
-      });
-    }
+    const filter: FilterQuery<UserDocument> = filterObject({
+      $or: query.keys ? [{ name: { $regex: new RegExp(query.keys, 'i') } }] : undefined,
+    });
 
-    // paginate from nestjs-paginate-mongo
-    return paginate(this.userModel.find(filter), { page: query.page, perPage: query.size });
-
-    // Aggregate Version
-    // const oprs = [];
-    // if (query.keys) {
-    //   oprs.push({
-    //     $match: {
-    //       name: {
-    //         $regex: query.keys,
-    //         $options: 'i',
-    //       },
-    //     },
-    //   });
-    // }
-    // return aggregatePaginate(this.userModel, oprs, { perPage: +query.size, page: +query.page });
+    // paginate from mongoose-paginate-v2
+    return this.userModel.paginate(filter, {
+      page: query.page ?? 1,
+      perPage: query.size ?? 100,
+      sort: query.sort ?? 'createdAt',
+      pagination: query.pagination ?? true,
+    });
   }
 
   async findOne(_id: Schema.Types.ObjectId): Promise<ResponseUserDto | null> {
