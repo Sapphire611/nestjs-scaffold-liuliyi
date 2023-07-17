@@ -1,6 +1,5 @@
 import { AppModule } from '@/app.module';
-import { User, UserDocument } from '@/modules/user/schemas/user.schema';
-import { UserService } from '@/modules/user/user.service';
+import { User, UserDocument, UserService } from '@/modules/user';
 import { INestApplication } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';

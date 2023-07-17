@@ -1,5 +1,5 @@
-import { AuthGuard } from '@/common/auth/auth.guard';
 import { PaginateResult } from '@/common/interfaces';
+import { AuthGuard } from '@/modules/auth/auth.guard';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiExtraModels, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Schema } from 'mongoose';

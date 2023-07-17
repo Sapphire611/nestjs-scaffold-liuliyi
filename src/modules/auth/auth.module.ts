@@ -1,4 +1,4 @@
-import config from '@/config/local.config';
+import { config } from '@/config';
 import { UserModule } from '@/modules/user/user.module';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';

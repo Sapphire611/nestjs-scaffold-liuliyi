@@ -1,4 +1,4 @@
-import { MongoModule } from '@/providers/mongo/mongo.module';
+import { MongoModule } from '@/providers';
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
 import { userProviders } from './user.providers';

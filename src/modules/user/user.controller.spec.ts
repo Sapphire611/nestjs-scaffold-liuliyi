@@ -1,15 +1,15 @@
 import { AppModule } from '@/app.module';
-import { AuthService } from '@/common/auth/auth.service';
-import { createRandomUserDTO } from '@/common/auth/dto';
+import { AuthService, createRandomUserDTO } from '@/modules/auth';
 import { INestApplication } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ResponseUserDto } from './dto/create-user.dto';
+import { User } from './schemas/user.schema';
+
 import crypto from 'crypto-js';
 import Redis from 'ioredis';
 import mongoose from 'mongoose';
 import request from 'supertest';
-import { ResponseUserDto } from './dto/create-user.dto';
-import { User } from './schemas/user.schema';
 
 describe('UserController', () => {
   let module: TestingModule;

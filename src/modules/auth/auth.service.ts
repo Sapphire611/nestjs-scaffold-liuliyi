@@ -3,7 +3,7 @@ import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import crypto from 'crypto-js';
 import { Types } from 'mongoose';
-import { CreateUserDto, ResponseUserDto } from '../../modules/user/dto';
+import { CreateUserDto, ResponseUserDto } from '../user/dto';
 import { createRandomUserDTO } from './dto';
 
 @Injectable()

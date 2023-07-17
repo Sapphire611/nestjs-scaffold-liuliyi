@@ -1,9 +1,9 @@
-import config from '@/config/local.config';
+import { config, testConfig } from '@/config';
 import { Module } from '@nestjs/common';
 import Redis from 'ioredis';
 import { RedisController } from './redis.controller';
 
-const redisUrl = process.env.NODE_ENV === 'test' ? config.redisTestUrl : config.redisUrl;
+const redisUrl = process.env.NODE_ENV !== 'test' ? config.redis : testConfig.redis;
 const db = redisUrl.split('/')?.[3];
 const [host, port] = redisUrl.split('/')?.[2].split(':');
 @Module({

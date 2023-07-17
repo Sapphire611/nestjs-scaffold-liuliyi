@@ -1,4 +1,4 @@
-import config from '@/config/local.config';
+import { config } from '@/config';
 import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';

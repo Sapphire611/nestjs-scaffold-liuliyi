@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { mongoProviders } from './mongo.providers';
+import { mongoProviders } from './mongoose.providers';
 
 @Module({
   providers: [...mongoProviders],
