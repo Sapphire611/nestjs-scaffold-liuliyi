@@ -1,5 +1,5 @@
 const mongodbName = 'nestjs-scaffold';
-const mongodbPort = 27018; // you may need change this port
+const mongodbPort = 27017; // you may need change this port
 const ip = '127.0.0.1';
 
 export default {
