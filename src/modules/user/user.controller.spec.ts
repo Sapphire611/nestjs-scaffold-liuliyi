@@ -67,7 +67,7 @@ describe('UserController', () => {
       .set('Authorization', `Bearer ${user.token}`)
       .expect(res => {
         expect(200);
-        expect(res.body.data.filter((item: User) => item.name === userResult.name).length).toBe(1);
+        expect(res.body.docs.filter((item: User) => item.name === userResult.name).length).toBe(1);
       });
   });
 

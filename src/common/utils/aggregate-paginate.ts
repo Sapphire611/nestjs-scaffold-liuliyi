@@ -10,6 +10,7 @@ import { PaginateResult, PaginationOptions } from '../interfaces';
  * @example aggregatePaginate(this.userModel, oprs, { perPage: +query.size, page: +query.page });
  */
 
+// 这个文件暂时用不到，因为会使用插件 mongoose-paginate-v2
 export const aggregatePaginate: <T>(model: Model<T>, oprs: Array<PipelineStage>, options: PaginationOptions) => Promise<PaginateResult<T>> = async (
   model: Model<any>,
   oprs: Array<PipelineStage>,
