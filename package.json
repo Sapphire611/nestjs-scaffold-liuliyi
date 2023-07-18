@@ -39,6 +39,7 @@
     "crypto-js": "^4.1.1",
     "ioredis": "^5.3.2",
     "lodash": "^4.17.21",
+    "mongodb": "^5.7.0",
     "mongoose": "^6.8.3",
     "mongoose-paginate-v2": "^1.7.1",
     "nestjs-paginate-mongo": "^1.0.8",
