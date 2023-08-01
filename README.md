@@ -46,7 +46,7 @@ import config from '@/config/local.config';
 |   |   |-- xxx.service.ts          // 服务
 |   |   |-- xxx.provicer.ts         // [Injectable] 注入对象配置
 |   |   |-- index.ts                // 模块的入口文件
-|   |-- app.controller.ts           // 一个简单的controller 😄
+|   |-- app.controller.ts           // 一个简单的controller
 |   |-- app.module.ts               // 根模块
 |   |-- main.ts                     // 入口文件
 ```
