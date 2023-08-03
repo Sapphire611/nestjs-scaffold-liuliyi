@@ -1,10 +1,10 @@
 import { AppController } from '@/app.controller';
-import { AuthModule, UserModule } from '@/modules';
+import { AuthModule, FileModule, UserModule } from '@/modules';
 import { MongoModule, RedisModule } from '@/providers';
 import { Module } from '@nestjs/common';
 
 @Module({
-  imports: [UserModule, AuthModule, RedisModule, MongoModule],
+  imports: [UserModule, AuthModule, RedisModule, MongoModule, FileModule],
   controllers: [AppController],
   providers: [],
 })
