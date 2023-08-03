@@ -1,9 +1,9 @@
 import { filterObject } from '@/common/utils';
 import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { DeleteResult } from 'mongodb';
 import { FilterQuery, PaginateModel, Schema } from 'mongoose';
 import { CreateUserDto, ListUserDto, ResponseUserDto, UpdateUserDto } from './dto';
 import { UserDocument } from './schemas/user.schema';
-
 @Injectable()
 export class UserService implements OnModuleInit {
   private readonly logger = new Logger(UserService.name);
@@ -42,11 +42,11 @@ export class UserService implements OnModuleInit {
     return this.userModel.findOne({ _id });
   }
 
-  async update(_id: Schema.Types.ObjectId, updateUserDto: UpdateUserDto) {
+  async update(_id: Schema.Types.ObjectId, updateUserDto: UpdateUserDto): Promise<any> {
     return this.userModel.updateOne({ _id }, updateUserDto);
   }
 
-  async remove(_id: Schema.Types.ObjectId) {
+  async remove(_id: Schema.Types.ObjectId): Promise<DeleteResult> {
     return this.userModel.deleteOne({ _id });
   }
 

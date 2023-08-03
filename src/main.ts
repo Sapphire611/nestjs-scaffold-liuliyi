@@ -2,8 +2,6 @@ import { config } from '@/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { DataSource } from 'typeorm';
-import { MongoConnectionOptions } from 'typeorm/driver/mongodb/MongoConnectionOptions';
 import { description, name, version } from '../package.json';
 import { AppModule } from './app.module';
 
@@ -35,8 +33,8 @@ async function bootstrap() {
 
   // typeorm
   // 获取 TypeORM 连接对象
-  const typeOrmOptions = app.get(DataSource).options as MongoConnectionOptions;
-  Logger.debug(`typeorm is running on: mongodb://${typeOrmOptions.host}:${typeOrmOptions.port}/${typeOrmOptions.database}`);
+  // const typeOrmOptions = app.get(DataSource).options as MongoConnectionOptions;
+  // Logger.debug(`typeorm is running on: mongodb://${typeOrmOptions.host}:${typeOrmOptions.port}/${typeOrmOptions.database}`);
 }
 
 bootstrap();

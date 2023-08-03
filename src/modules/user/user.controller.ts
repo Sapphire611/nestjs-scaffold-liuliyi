@@ -1,9 +1,11 @@
 import { AuthGuard } from '@/modules/auth/auth.guard';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiExtraModels, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { DeleteResult, UpdateResult } from 'mongodb';
 import { Schema } from 'mongoose';
 import { CreateUserDto, ListUserDto, UpdateUserDto } from './dto';
 import { UserService } from './user.service';
+import { UserDocument } from './schemas/user.schema';
 
 @ApiTags('Users 用户相关')
 @Controller('/api/v1/users')
@@ -58,7 +60,7 @@ export class UserController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Patch('/:id')
-  update(@Param('id') id: Schema.Types.ObjectId, @Body() updateUserDto: UpdateUserDto) {
+  update(@Param('id') id: Schema.Types.ObjectId, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult<UserDocument>> {
     return this.userService.update(id, updateUserDto);
   }
 
@@ -73,9 +75,7 @@ export class UserController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Delete(':id')
-  remove(@Param('id') id: Schema.Types.ObjectId) {
+  remove(@Param('id') id: Schema.Types.ObjectId): Promise<DeleteResult> {
     return this.userService.remove(id);
   }
-
-
 }
