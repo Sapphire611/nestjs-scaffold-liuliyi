@@ -16,4 +16,10 @@ export class Photo {
 
   @Column()
   isPublished: boolean;
+
+  @Column()
+  createdAt: Date;
+
+  @Column()
+  updatedAt: Date;
 }

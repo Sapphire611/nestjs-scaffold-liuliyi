@@ -19,15 +19,9 @@ async function bootstrap() {
 
   // 开始监听端口
   await app.listen(config.port);
+  
   Logger.debug(`${name}-${version} is running on: http://127.0.0.1:${config.port}`);
   Logger.debug(`swagger is running on: http://127.0.0.1:${config.port}/${config.swaggerSuffix}`);
-  // mongoose
-  const mongooseInstance = app.get('MONGO_CONNECTION');
-  Logger.debug(`mongoose is running on: ${mongooseInstance.connection._connectionString}`);
-
-  // redis
-  const redisInstance = app.get('REDIS_CONNECTION');
-  Logger.debug(`redis is running on: http://${redisInstance.options.host}:${redisInstance.options.port}/${redisInstance.options.db}`);
 }
 
 bootstrap();

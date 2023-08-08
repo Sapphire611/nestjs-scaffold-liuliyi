@@ -1,8 +1,15 @@
-import { Module } from '@nestjs/common';
+import { config } from '@/config';
+import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { mongoProviders } from './mongoose.providers';
 
 @Module({
   providers: [...mongoProviders],
   exports: [...mongoProviders],
 })
-export class MongoModule {}
+
+export class MongoModule implements OnModuleInit {
+  onModuleInit() {
+    // mongoose
+    Logger.debug(`mongoose is running on: ${config.mongodb}`);
+  }
+}

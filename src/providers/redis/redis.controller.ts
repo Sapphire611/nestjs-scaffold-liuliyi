@@ -5,7 +5,7 @@ import Redis from 'ioredis';
 @ApiTags('Basic')
 @Controller('/redis')
 export class RedisController {
-  constructor(@Inject('REDIS_CONNECTION') private readonly redisClient: Redis,){}
+  constructor(@Inject('REDIS_CONNECTION') private readonly redisClient: Redis){}
   @ApiOperation({
     summary: '测试redis',
   })
