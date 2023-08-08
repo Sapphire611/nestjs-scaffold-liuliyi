@@ -4,10 +4,10 @@ import { ApiBearerAuth, ApiExtraModels, ApiOperation, ApiParam, ApiTags } from '
 import { DeleteResult, UpdateResult } from 'mongodb';
 import { Schema } from 'mongoose';
 import { CreateUserDto, ListUserDto, UpdateUserDto } from './dto';
-import { UserService } from './user.service';
 import { UserDocument } from './schemas/user.schema';
+import { UserService } from './user.service';
 
-@ApiTags('Users 用户相关')
+@ApiTags('Users 用户相关(Mongoose)')
 @Controller('/api/v1/users')
 @ApiExtraModels(CreateUserDto, UpdateUserDto)
 export class UserController {

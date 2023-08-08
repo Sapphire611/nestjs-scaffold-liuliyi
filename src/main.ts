@@ -4,7 +4,6 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { description, name, version } from '../package.json';
 import { AppModule } from './app.module';
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -29,11 +28,6 @@ async function bootstrap() {
   // redis
   const redisInstance = app.get('REDIS_CONNECTION');
   Logger.debug(`redis is running on: http://${redisInstance.options.host}:${redisInstance.options.port}/${redisInstance.options.db}`);
-
-  // typeorm
-  // 获取 TypeORM 连接对象
-  // const typeOrmOptions = app.get(DataSource).options as MongoConnectionOptions;
-  // Logger.debug(`typeorm is running on: mongodb://${typeOrmOptions.host}:${typeOrmOptions.port}/${typeOrmOptions.database}`);
 }
 
 bootstrap();
