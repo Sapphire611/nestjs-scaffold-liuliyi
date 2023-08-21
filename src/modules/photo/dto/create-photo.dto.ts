@@ -28,6 +28,6 @@ export class CreatePhotoDto {
   updatedAt: Date;
 }
 
-export class ResponseUserDto extends CreatePhotoDto {
+export class ResponsePhotoDto extends CreatePhotoDto {
   _id: Types.ObjectId;
 }

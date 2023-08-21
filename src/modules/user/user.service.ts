@@ -8,8 +8,9 @@ import { UserDocument } from './schemas/user.schema';
 export class UserService implements OnModuleInit {
   private readonly logger = new Logger(UserService.name);
 
-  constructor(@Inject('UserModel') private readonly userModel: PaginateModel<UserDocument>) {}
-
+  @Inject('UserModel')
+  private readonly userModel: PaginateModel<UserDocument>
+  
   async onModuleInit() {
     this.initAdmin();
   }

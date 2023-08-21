@@ -1,25 +1,25 @@
-import { Column, Entity, ObjectId, ObjectIdColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ObjectId, ObjectIdColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Photo {
-  @ObjectIdColumn()
-  id: ObjectId;
+  @ObjectIdColumn({ comment: '主键id' })
+  _id: ObjectId;
 
-  @Column()
+  @Column({ type: String, comment: '名称' })
   name: string;
 
-  @Column()
+  @Column({ type: String, comment: '描述' })
   description: string;
 
-  @Column()
+  @Column({ type: String, comment: '文件名' })
   filename: string;
 
-  @Column()
+  @Column({ type: Boolean, default: false, comment: '是否发布' })
   isPublished: boolean;
 
-  @Column()
+  @CreateDateColumn({ type: Date, default: Date.now(), comment: '创建时间戳' })
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn({ type: Date, default: Date.now(), comment: '更新时间戳' })
   updatedAt: Date;
 }
