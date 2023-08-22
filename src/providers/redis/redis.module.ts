@@ -35,6 +35,6 @@ const [host, port] = redisUrl.split('/')?.[2].split(':');
 })
 export class RedisModule implements OnModuleInit {
   onModuleInit() {
-    Logger.debug(`redis is running on: ${config.redis}`);
+    Logger.log(`redis is running on: ${config.redis}`);
   }
 }

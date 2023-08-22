@@ -10,6 +10,6 @@ import { mongoProviders } from './mongoose.providers';
 export class MongoModule implements OnModuleInit {
   onModuleInit() {
     // mongoose
-    Logger.debug(`mongoose is running on: ${config.mongodb}`);
+    Logger.log(`mongoose is running on: ${config.mongodb}`);
   }
 }

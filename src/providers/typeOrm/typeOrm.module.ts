@@ -13,8 +13,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     PhotoModule,
   ],
 })
+
 export class TypeOrmCustomModule implements OnModuleInit {
   onModuleInit() {
-    Logger.debug(`typeorm is running on: ${config.mongodb}`);
+    Logger.log(`typeorm is running on: ${config.mongodb}`);
   }
 }

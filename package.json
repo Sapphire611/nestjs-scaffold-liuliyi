@@ -44,6 +44,7 @@
     "mongodb": "^5.7.0",
     "mongoose": "^6.8.3",
     "mongoose-paginate-v2": "^1.7.1",
+    "mqtt": "^5.0.3",
     "nestjs-paginate-mongo": "^1.0.8",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.1.13",
