@@ -1,4 +1,5 @@
 import { ListDto } from '@/common/utils/listDto';
+import { ParseBoolean } from '@/common/utils/transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ListPhotoDto extends ListDto {
@@ -9,6 +10,6 @@ export class ListPhotoDto extends ListDto {
   endAt?: Date;
 
   @ApiProperty({ description: '是否发布', required: false, example: false })
-  // @Transform(value => Boolean(value))
+  @ParseBoolean()
   isPublished?: string;
 }

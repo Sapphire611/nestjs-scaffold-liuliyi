@@ -1,5 +1,5 @@
-import { Paging, getOrder, string2Boolean } from '@/common/utils';
-import { Injectable } from '@nestjs/common';
+import { Paging, getOrder } from '@/common/utils';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ObjectId } from 'mongodb';
 import { MongoRepository } from 'typeorm';
@@ -12,12 +12,13 @@ export class PhotoService {
   private readonly photoRepository: MongoRepository<Photo>;
 
   async findAll(query: ListPhotoDto) {
+    Logger.debug(JSON.stringify(query));
     const page = query.page ?? 1;
     const size = query.size ?? 100;
 
     // FindOptionsWhere<T>
     const filter: any = {
-      isPublished: string2Boolean(query.isPublished),
+      isPublished: query.isPublished,
     };
 
     // createdAt:

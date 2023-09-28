@@ -12,7 +12,7 @@ export class Photo {
   description: string;
 
   @Column({ type: String, comment: '文件名' })
-  filename: string;
+  fileUrl: string;
 
   @Column({ type: Boolean, default: false, comment: '是否发布' })
   isPublished: boolean;

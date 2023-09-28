@@ -14,8 +14,8 @@ export class CreatePhotoDto {
 
   @ApiProperty({ description: '文件名', example: 'testName1.jpg' })
   @IsString()
-  @Length(3, 30)
-  fileName: string;
+  @Length(10, 500)
+  fileUrl: string;
 
   @ApiProperty({ description: '是否有效', example: false })
   @IsBoolean()

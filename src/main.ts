@@ -4,7 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { description, name, version } from '../package.json';
 import { AppModule } from './app.module';
-import { MqttService } from './providers/mqtt/mqtt.service';
+// import { MqttService } from './providers/mqtt/mqtt.service';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -23,8 +23,8 @@ async function bootstrap() {
   });
   SwaggerModule.setup(config.swaggerSuffix, app, document);
 
-  const mqttService = app.get(MqttService);
-  mqttService.open();
+  // const mqttService = app.get(MqttService);
+  // mqttService.open();
   // 开始监听端口
   await app.listen(config.port);
 

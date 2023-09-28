@@ -4,7 +4,7 @@ import { MongoModule, MqttModule, RedisModule, TypeOrmCustomModule } from '@/pro
 import { Module } from '@nestjs/common';
 
 @Module({
-  imports: [UserModule, AuthModule, RedisModule, PhotoModule, TypeOrmCustomModule, MongoModule, FileModule, MqttModule],
+  imports: [UserModule, AuthModule, RedisModule, PhotoModule, TypeOrmCustomModule, MongoModule, FileModule],
   controllers: [AppController],
   providers: [],
 })
