@@ -33,6 +33,10 @@ export class PhotoService {
       filter.status = query.status;
     }
 
+    if (query.category && query.category !== 'all') {
+      filter.category = query.category;
+    }
+
     // createdAt:
     if (query.beginAt || query.endAt) {
       const createdAtJSON: any = {};
@@ -52,8 +56,8 @@ export class PhotoService {
     const [photos, count] = await this.photoRepository.findAndCount({
       where: filter,
       order: getOrder(query.sort),
-      take: size,
-      skip: (page - 1) * size,
+      // take: size,
+      // skip: (page - 1) * size,
     });
 
     return new Paging({ docs: photos, total: count, page, size });
