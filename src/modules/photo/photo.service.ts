@@ -29,6 +29,10 @@ export class PhotoService {
       filter.isPublished = query.isPublished;
     }
 
+    if (query.status && query.status !== 'all') {
+      filter.status = query.status;
+    }
+
     // createdAt:
     if (query.beginAt || query.endAt) {
       const createdAtJSON: any = {};

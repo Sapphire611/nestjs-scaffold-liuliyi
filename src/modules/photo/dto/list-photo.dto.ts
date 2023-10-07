@@ -12,4 +12,7 @@ export class ListPhotoDto extends ListDto {
   @ApiProperty({ description: '是否发布', required: false, example: false })
   @ParseBoolean()
   isPublished?: string;
+
+  @ApiProperty({ description: '照片状态', required: false, example: false })
+  status?: string;
 }
