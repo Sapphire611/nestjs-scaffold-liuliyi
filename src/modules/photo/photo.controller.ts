@@ -1,8 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { ApiExtraModels, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { ListPhotoDto } from './dto';
-import { CreatePhotoDto } from './dto/create-photo.dto';
-import { UpdatePhotoDto } from './dto/update-photo.dto';
+import { ListPhotoDto, CreatePhotoDto, UpdatePhotoDto } from './dto';
 import { PhotoService } from './photo.service';
 
 @ApiTags('Photo 用户相关(TypeOrm)')
@@ -15,8 +13,8 @@ export class PhotoController {
     summary: '获得照片列表',
   })
   @Get()
-  findAll(@Query() listPhotoDto: ListPhotoDto) {
-    return this.photoService.findAll(listPhotoDto);
+  list(@Query() listPhotoDto: ListPhotoDto) {
+    return this.photoService.list(listPhotoDto);
   }
 
   @Post()
@@ -65,5 +63,13 @@ export class PhotoController {
   @Delete('/:id')
   delete(@Param('id') id: string) {
     return this.photoService.delete(id);
+  }
+
+  @ApiOperation({
+    summary: '获得照片的所有分类',
+  })
+  @Post('/category')
+  getCategories() {
+    return this.photoService.getCategories();
   }
 }

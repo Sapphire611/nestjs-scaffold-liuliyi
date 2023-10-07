@@ -4,6 +4,9 @@ import { ApiProperty } from '@nestjs/swagger';
 export class Paging<T> {
   constructor(props: { docs: T[]; total: number; page: number; size: number }) {
     this.docs = props.docs;
+    this.total = props.total;
+    this.page = props.page;
+    this.size = props.size;
   }
 
   @ApiProperty({ description: '当前页数据', example: [] })
@@ -26,7 +29,7 @@ export const getOrder = (sort?: string): Object => {
       createdAt: 'DESC',
     };
   }
-  
+
   if (sort.startsWith('-')) {
     return {
       [sort.substring(1)]: 'DESC',

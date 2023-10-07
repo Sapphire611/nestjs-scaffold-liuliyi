@@ -1,5 +1,5 @@
-import { ListDto } from '@/common/utils/listDto';
-import { ParseBoolean } from '@/common/utils/transformer';
+import { ListDto } from '@/common/utils';
+import { ParseBoolean } from '@/common/utils';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ListPhotoDto extends ListDto {

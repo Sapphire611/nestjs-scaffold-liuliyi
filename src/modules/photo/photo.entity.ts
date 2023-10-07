@@ -8,11 +8,17 @@ export class Photo {
   @Column({ type: String, comment: '名称' })
   name: string;
 
+  @Column({ type: String, comment: '类别' })
+  category: string;
+
   @Column({ type: String, comment: '描述' })
   description: string;
 
-  @Column({ type: String, comment: '文件名' })
+  @Column({ type: String, comment: 'Url (http)' })
   fileUrl: string;
+
+  @Column({ type: String, default: 'auditing', comment: '状态' })
+  status: string;
 
   @Column({ type: Boolean, default: false, comment: '是否发布' })
   isPublished: boolean;
