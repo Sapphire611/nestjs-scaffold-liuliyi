@@ -12,7 +12,10 @@ export class CreatePhotoDto {
   @IsString()
   description?: string;
 
-  @ApiProperty({ description: 'Url (http)', example: 'https://th.bing.com/th/id/OIP.iY9EwHM8msHe9Km6GdzAFgHaHa?pid=ImgDet&rs=1' })
+  @ApiProperty({
+    description: 'Url (http)',
+    example: 'https://th.bing.com/th/id/OIP.iY9EwHM8msHe9Km6GdzAFgHaHa?pid=ImgDet&rs=1',
+  })
   @IsString()
   @Length(10, 500)
   fileUrl: string;
@@ -25,9 +28,9 @@ export class CreatePhotoDto {
   // @IsString()
   // status: string;
 
-  // @ApiProperty({ description: '是否有效', example: false })
-  // @IsBoolean()
-  // isPublished?: boolean;
+  @ApiProperty({ description: '是否有效', example: false })
+  @IsBoolean()
+  isPublished?: boolean;
 
   @ApiProperty({ description: '创建时间', example: new Date() })
   createdAt: Date;

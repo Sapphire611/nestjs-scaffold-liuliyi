@@ -69,7 +69,11 @@ export class PhotoService {
    * @returns 创建好的Photo信息
    */
   async create(createPhotoDto: CreatePhotoDto) {
-    return this.photoRepository.save({ ...createPhotoDto, isPublished: false, status: 'auditing' });
+    return this.photoRepository.save({
+      ...createPhotoDto,
+      isPublished: createPhotoDto.isPublished ?? false,
+      status: 'auditing',
+    });
   }
 
   /**
