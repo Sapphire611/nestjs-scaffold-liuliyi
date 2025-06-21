@@ -1,12 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseInterceptors } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-
+import { LoggingInterceptor } from '@/common/interceptor/index';
 @ApiTags('Basic')
 @Controller('/')
 export class AppController {
   @ApiOperation({
     summary: '测试连通性',
   })
+  @UseInterceptors(LoggingInterceptor)
   @ApiOkResponse({
     status: 200,
     description: '成功响应的例子',

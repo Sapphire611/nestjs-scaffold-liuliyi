@@ -28,6 +28,9 @@ async function bootstrap() {
   // 开始监听端口
   await app.listen(config.port);
 
+  // app.useGlobalGuards(new RolesGuard()); // 全局注册守卫
+  // app.useGlobalInterceptors(new TransformInterceptor()); // 全局注册拦截器
+
   Logger.log(`${name}-${version} is running on: http://127.0.0.1:${config.port}`);
   Logger.log(`swagger is running on: http://127.0.0.1:${config.port}/${config.swaggerSuffix}`);
 }
