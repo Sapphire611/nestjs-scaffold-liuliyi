@@ -16,7 +16,7 @@ const VALIDATE_PARAM = Symbol('VALIDATE_PARAM');
 
 exports.validateReturn =
   exports.validateResponse =
-    validateReturn;
+  validateReturn;
 
 exports.validate = validate;
 exports.validateParam = validateParam;
@@ -33,11 +33,11 @@ function validate(source: any, validateClass: any, throwError: boolean = true) {
   Object.setPrototypeOf(source, validateClass.prototype); // 原型链设置为验证类的原型链
 
   const validateResult = classValidate(source)
-  if(validateResult.length > 0) {
+  if (validateResult.length > 0) {
     const msg = '[validate error] ==>Start: ' + JSON.stringify(validateResult, null, 2) + '[validate error] <==End: ';
     if (throwError) {
       throw new Error(msg);
-    }else {
+    } else {
       logger.error(msg);
 
     }
@@ -58,7 +58,7 @@ function validateReturn(validateClass: any, throwError: boolean = true) {
     descriptor.value = function () {
       let result = method.apply(this, arguments);
       return result instanceof Promise ?
-        result.then(result => validate(result, validateClass, throwError)):
+        result.then(result => validate(result, validateClass, throwError)) :
         validate(result, validateClass, throwError);
 
     };
@@ -87,7 +87,7 @@ function validateAs(validateClass: any, throwError: boolean = true) {
  */
 function validateParam(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
   const method = descriptor.value;
-  descriptor.value = function() {
+  descriptor.value = function () {
     const validateConstraints = Reflect.getOwnMetadata(VALIDATE_PARAM, target, propertyKey);
     Array.prototype.slice.call(arguments).forEach((arg, index) => {
       const configs = validateConstraints[index];

@@ -35,6 +35,6 @@ export class ScheduleService {
   // @Timeout(3000)
   handleCron3() {
     const job: CronJob = this.schedulerRegistry.getCronJob('schedule3');
-    this.logger.debug(job.running);
+    // this.logger.debug(job.running);
   }
 }

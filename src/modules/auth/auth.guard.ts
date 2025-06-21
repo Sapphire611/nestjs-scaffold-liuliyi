@@ -5,10 +5,17 @@ import { Request } from 'express';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
+    // const controllerClass = context.getClass();      // 当前控制器类
+    // const handlerMethod = context.getHandler();      // 当前调用的方法
+    // console.debug({ controllerClass, handlerMethod })
+    // {
+    //   controllerClass: [class UserController],
+    //   handlerMethod: [Function: findOne]
+    // }
     const token = this.extractTokenFromHeader(request);
     if (!token) {
       throw new UnauthorizedException();

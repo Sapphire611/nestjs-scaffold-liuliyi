@@ -22,6 +22,7 @@ export class AppController {
   })
   @Get()
   getHello(): Object {
+    console.debug({ message: 'Hello, World!' })
     return { message: 'Hello, World!' };
   }
 }
